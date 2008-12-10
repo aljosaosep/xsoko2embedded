@@ -1,6 +1,6 @@
 /*
  * codename: xSoko
- * Copyright (C) Aljosa Osep, Jernej Skrabec, Jernej Halozan 2008 <aljosa.osep@gmail.com, jernej.skrabec@gmail.com, jernej.halozan@gmail.com>
+ * Copyright (C) Aljosa Osep 2008 <aljosa.osep@gmail.com>
  * 
  * xSoko project is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -67,15 +67,9 @@ namespace PacGame
 		float angle = 0.0;
         void PGameSession::mainLoop()
         {
-       /*     Messages::infoMessage("Entering main loop...");
-            // the time of the previous frame
-        //    double old_time = glfwGetTime();   
-            
-      //      unsigned frames = 0;
-            
-      //      this->camera->fitCameraToLevel(this->level->getWidth(), this->level->getHeight());
-            
-     //       RenderMaschine::PParticleEngine particles(5.0, 7.0, 9.0);
+            /* the time of the previous frame
+            double old_time = glfwGetTime();   
+
              
             while(1)
             {
@@ -90,45 +84,23 @@ namespace PacGame
                 // is game over? or level done?
                 if(this->level->getEndgameFlag() || forceQuit)
                     break;
-                
-                // check for input every time
-                this->input->process();
 
-			    // clear the buffer
-                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-                glLoadIdentity(); // reset view matrix
-                  
-                gluLookAt(this->camera->view.getCoordX(), this->camera->view.getCoordY(), this->camera->view.getCoordZ(), 
-                        this->camera->position.getCoordX(), this->camera->position.getCoordY(), this->camera->position.getCoordZ(), 
-                        this->camera->up.getCoordX(), this->camera->up.getCoordY(), this->camera->up.getCoordZ());
-
-                glRotatef(-90.0, 0.0, 0.0, 1.0);
-
-                this->level->draw();
-
-              
-				glFlush();
-				glutSwapBuffers(); 
             } */
-
-
 
 		   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		   glLoadIdentity();
 
-	//	   this->camera->fitCameraToLevel(this->level->getWidth(), this->level->getHeight());
-		   this->camera->fitCameraToLevel(7, 5);  // DONT LEAVE IT HARDCODED !!!!!!!!!!!!
+		//   this->camera->fitCameraToLevel(this->level->getWidth(), this->level->getHeight());
 
 		   gluLookAt(this->camera->view.getCoordX(), this->camera->view.getCoordY(), this->camera->view.getCoordZ(), 
                      this->camera->position.getCoordX(), this->camera->position.getCoordY(), this->camera->position.getCoordZ(), 
                      this->camera->up.getCoordX(), this->camera->up.getCoordY(), this->camera->up.getCoordZ());
 
-		//   glRotatef(angle, 0.0, 1.0, 1.0);
-
-           glRotatef(-90.0, 0.0, 0.0, 1.0);
+		   glRotatef(-180.0, 0.0, 0.0, 1.0);
            this->level->draw();
 
-		//   angle +=0.6;
+		//   this->level->getGameCoreHandle()->getRenderer()->drawText(0.0,0.0, "howdy!!!!!!");
+
 		   glFlush ();
 		   glutSwapBuffers();
         }

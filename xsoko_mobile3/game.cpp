@@ -1,6 +1,6 @@
 /*
  * codename: xSoko
- * Copyright (C) Aljosa Osep, Jernej Skrabec, Jernej Halozan 2008 <aljosa.osep@gmail.com, jernej.skrabec@gmail.com, jernej.halozan@gmail.com>
+ * Copyright (C) Aljosa Osep 2008 <aljosa.osep@gmail.com>
  * 
  * xSoko project is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -31,7 +31,7 @@
 //#include "game.h"
 
 #include "stdafx.h"
-
+/*
 using namespace PacGame;
 
 namespace PacGame
@@ -65,11 +65,7 @@ namespace PacGame
           
           bool PGame::run()
           {
-		/*	  if(!this->session->run())//!!!!!!!!
-				  return false;
 
-			  glutMainLoop();
-			  */
 			  return true;
           }
           
@@ -91,4 +87,4 @@ namespace PacGame
           //     glfwTerminate();
           }
       }
-}
+}*/

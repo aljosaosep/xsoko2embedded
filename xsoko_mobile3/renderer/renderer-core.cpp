@@ -1,6 +1,6 @@
 /*
  * codename: xSoko
- * Copyright (C) Aljosa Osep, Jernej Skrabec, Jernej Halozan 2008 <aljosa.osep@gmail.com, jernej.skrabec@gmail.com, jernej.halozan@gmail.com>
+ * Copyright (C) Aljosa Osep 2008 <aljosa.osep@gmail.com>
  * 
  * xSoko project is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -235,10 +235,28 @@ namespace PacGame
           void PRenderer::drawFloor(float x, float y, float size)
           {
                  glPushMatrix();
-                    glTranslatef(x, y, 0.0);
+                    glTranslatef(x, y, 1.0);
 						glNormal3f(0.0f, 0.0f, -1.0f);
 					    glDrawArrays(GL_TRIANGLE_STRIP, 4, 4);
+                 glPopMatrix(); 
+          }
+
+		  /********************************************
+           * drawText()
+           * Draws text via GLUT
+           ********************************************/
+		  void PRenderer::drawText(float x, float y, string text)
+          {
+                 glPushMatrix();
+               //     glTranslatef(x, y, 0.0);
+					glTranslatef(x, y, 0.0);
+					for (string::iterator i = text.begin(); i != text.end(); ++i)
+					{
+						char c = *i;
+						glutStrokeCharacter(GLUT_STROKE_ROMAN,  c);
+					}
                   glPopMatrix(); 
           }
+
       }
 }

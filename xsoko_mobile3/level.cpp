@@ -1,6 +1,6 @@
 /*
  * codename: xSoko
- * Copyright (C) Aljosa Osep, Jernej Skrabec, Jernej Halozan 2008 <aljosa.osep@gmail.com, jernej.skrabec@gmail.com, jernej.halozan@gmail.com>
+ * Copyright (C) Aljosa Osep 2008 <aljosa.osep@gmail.com>
  * 
  * xSoko project is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -173,18 +173,13 @@ namespace PacGame
               
               // checks if indexes are valible; it prevents index-out-of-range error
               if((unsigned)i2 >  (this->width-1)|| i2<0 || (unsigned)j2 > (this->height-1) || j2<0)
-              {
-      //            Messages::errorIndexOutOfRange();
                   return false;
-              }
-              
+
               int i = obj->getI(), j = obj->getJ(); // gets source object indexes, object, that we're moving
-    //          cout<<"indexes: "<<i<<' '<<j<<endl;
               
               // is move absolutely possible?
               if(data[i2][j2]->isPlayerMovePossible()==1)  // it is!
               {
-      //            cout<<"move possible = 1: direct reattach"<<endl;
                   reattachNode(i, j, i2, j2, obj);  // so we just do it ;) we move object from indexes i, j to i2, j2
                   return true;
               }
@@ -192,14 +187,10 @@ namespace PacGame
               //////// TELEPORT
               else if(data[i2][j2]->isPlayerMovePossible()==3)  
               {
-     //             cout<<"Teleport: "<<endl;
                   // it - I index of dest teleport
                   // jt-  J index of dest teleport
                   int it = (static_cast<PTeleport*>(data[i2][j2]))->getChildTeleport()->getI(), 
                           jt = (static_cast<PTeleport*>(data[i2][j2]))->getChildTeleport()->getJ();
-                  
-     //             cout<<"Child Teleport indexes: "<<it<<' '<<jt<<endl;
-                  
                   
                   if(data[it][jt]->returnFirstChild()!=NULL) // if there is object alredy on teleport
                   {
@@ -208,17 +199,16 @@ namespace PacGame
                       if(static_cast<PLevelObject*>(data[it][jt]->returnFirstChild())->getId() == 1)
                           return false;
                       
-      //                cout<<"First Teleport child not null! Attempting to move: ... "<<it<<' '<<jt<<endl;
                       if(this->moveObject(dir, static_cast<PLevelObject*>(data[it][jt]->returnFirstChild())))  // try to move it
                       {
-        //                  cout<<"Object on teleport moved. Reattaching node ... "<<it<<' '<<jt<<endl;
+						// Object on teleport moved. Reattaching node ... 
                           reattachNode(i, j, it, jt, obj);   //  then move player to teleport
                           return true;
                       }
                   }
                   else  // there is no object attached to teleport, that's ok
                   {
-      //                cout<<"Cool, no object on teleport, so beam me up scotty!"<<it<<' '<<jt<<endl;
+      //              // Cool, there's no object on teleport, so beam it up
                       reattachNode(i, j, it, jt, obj);  // so we just move player to dest teleport ;)
                       return true;
                   }
@@ -227,10 +217,8 @@ namespace PacGame
               // CONDITIONALLY POSSIBLE MOVES
               else if(data[i2][j2]->isPlayerMovePossible()==2  && (!data[i2][j2]->isActiveBomb()))  // move is conditionally possible; we check children
               {
-     //             cout<<"Conditially possible move."<<endl;
                   if(data[i2][j2]->returnFirstChild() == NULL)  // move is possible since there are no children
                   {
-     //                 cout<<"It seems that dest has no children, so I will directly reattach node."<<endl;
                       reattachNode(i, j, i2, j2, obj);   // so we do it ;)
                       return true;
                   }
@@ -239,11 +227,9 @@ namespace PacGame
                   else if(data[i2][j2]->returnFirstChild()->isPlayerMovePossible() == 2 && (obj->getId()==1))  // there is cube on the field, we attemt to move it
                                                                                                               // but we can move it only, if obj is player(do it has id=1)
                   {
-          //            cout<<"Hell, there is someting there, attempting to move..."<<endl;
                       // CUBE-MOVE CODE GOES HERE
                       if(this->moveObject(dir, static_cast<PLevelObject*>(data[i2][j2]->returnFirstChild())))
                       {
-         //                 cout<<"Obj moved, now I am reattaching..."<<endl;
                           reattachNode(i, j, i2, j2, obj);   // it is, we move object
                           return true;   
                       }
@@ -253,13 +239,11 @@ namespace PacGame
                   else if(data[i2][j2]->returnFirstChild()->isPlayerMovePossible() == 3 && (obj->getId()==1))  // there is cube on the field, we attemt to move it
                                                                                                               // but we can move it only, if obj is player(do it has id=1)
                   { 
-        //              cout<<"Hell, there is someting there, oneway cube, attempting to move..."<<endl;
                       if(static_cast<POnewayCube*>(data[i2][j2]->returnFirstChild())->getDirection()==dir)
                       {
                           // CUBE-MOVE CODE GOES HERE
                           if(this->moveObject(dir, static_cast<PLevelObject*>(data[i2][j2]->returnFirstChild())))
                           {
-         //                   cout<<"Obj moved, now I am reattaching..."<<endl;
                               reattachNode(i, j, i2, j2, obj);   // it is, we move object
                               return true;   
                           }
@@ -267,7 +251,6 @@ namespace PacGame
                   } 
                   else if(data[i2][j2]->returnFirstChild()->isPlayerMovePossible() == 4) // there is a bomb
                   {
-                    //  cout<<"idproblem"<<endl;
                       if(obj->getId()==1) // is object a player ?
                       {
                       //    data[i2][j2]->releaseFirstChild(); // release picking bomb object
@@ -343,7 +326,13 @@ namespace PacGame
                       if(this->isLevelDone())
                       {
                           this->endgameFlag = true;
-                          Messages::infoMessage("You won!!!!! :))))");
+                          //Messages::infoMessage("You won!!!!! :))))");
+
+						  /////// TODO
+						  // place some YOU WON code here
+						  /// ;)
+						  ///////
+						  MessageBox(NULL, _T("You won! :)"), _T("Congradulations!"), NULL);
                       }
                       return true;
                   }
@@ -356,23 +345,18 @@ namespace PacGame
                           if(this->isLevelDone())
                           {
                               this->endgameFlag = true;
-                              Messages::infoMessage("You won!!!!! :))))");
+                           //   Messages::infoMessage("You won!!!!! :))))");
+
+						  /////// TODO
+						  // place some YOU WON code here
+						  /// ;)
+						  ///////
+							  MessageBox(NULL, _T("You won! :)"), _T("Congradulations!"), NULL);
                           }
                           return true;                         
                       }
                   }   
               }
-
-              
-              // is there empty space?
-          //    else if(data[i2][j2]->returnFirstChild()==NULL)
-        //      {
-                  // yes! game over, haha!
-              /*    cout<<"Is not a bug, you fall into space - or you pushed cube into space, so it's game over!!!! :p"<<endl;
-                  data[i][j]->attachToRoot(NULL);  // we make cube or player vanish
-                 // delete [] this->player;   // todo: delete player obj without segmentation fault!
-                  this->endgameFlag = true;  // and we make game end */
-      //        }
               
               return false; // to avoid warning
           }
@@ -456,7 +440,7 @@ namespace PacGame
                                   data[i][j] = new PTeleport(i, j, this->gameCore, num); // create object
                                   
                                   if((resourceHandle->getTextureResource(TELEPORT_RES))==NULL)  // texture isn't in memory yet?
-                                      resourceHandle->loadTextureResource(TELEPORT_RES, "test.tga");  // load it!
+                                      resourceHandle->loadTextureResource(TELEPORT_RES, "\\Program Files\\xsoko\\data\\test.tga");  // load it!
 								  /// dynamic->static
                                   (static_cast<PTeleport*>(data[i][j]))->setId(num);                // set its id
                             //      (static_cast<PTeleport*>(data[i][j]))->
@@ -470,7 +454,7 @@ namespace PacGame
                                       data[i][j] = new PFloor(this->gameCore);
                                       
                                       if((resourceHandle->getTextureResource(FLOOR_RES))==NULL)  // texture isn't in memory yet?
-                                            resourceHandle->loadTextureResource(FLOOR_RES, "floor.tga");  // load it!
+                                            resourceHandle->loadTextureResource(FLOOR_RES, "\\Program Files\\xsoko\\data\\floor.tga");  // load it!
                                       
                                       break;
                                       
@@ -481,7 +465,7 @@ namespace PacGame
                                   case S_WALL:
                                       data[i][j] = new PSolidWall(this->gameCore);   
                                       if((resourceHandle->getTextureResource(S_WALL_RES))==NULL)
-                                          resourceHandle->loadTextureResource(S_WALL_RES, "wall.tga"); 
+                                          resourceHandle->loadTextureResource(S_WALL_RES, "\\Program Files\\xsoko\\data\\wall.tga"); 
 
                                       break;
                                       
@@ -489,7 +473,7 @@ namespace PacGame
                                       data[i][j] = new PBridge(this->gameCore);
                                       
                                       if((resourceHandle->getTextureResource(BRIDGE_RES))==NULL)  // texture isn't in memory yet?
-                                            resourceHandle->loadTextureResource(BRIDGE_RES, "bridge.tga");  // load it!
+                                            resourceHandle->loadTextureResource(BRIDGE_RES, "\\Program Files\\xsoko\\data\\bridge.tga");  // load it!
                                       
                                       break;  
                                       
@@ -509,9 +493,8 @@ namespace PacGame
                                    //   data[i][j]->add(p);
                                       
                                       if((resourceHandle->getTextureResource(OW_FLOOR_RES))==NULL)  // texture isn't in memory yet?
-                                          resourceHandle->loadTextureResource(OW_FLOOR_RES, "onewayfloor.tga");  // load it!
+                                          resourceHandle->loadTextureResource(OW_FLOOR_RES, "\\Program Files\\xsoko\\data\\onewayfloor.tga");  // load it!
                                       
-                                  //    second_matrix[i][j] = 8;
                                  //     data[i][j]->add(NULL);
                                       break;
                                       
@@ -521,9 +504,8 @@ namespace PacGame
                                   //    data[i][j]->add(p);
                                       
                                       if((resourceHandle->getTextureResource(OW_FLOOR_RES))==NULL)  // texture isn't in memory yet?
-                                          resourceHandle->loadTextureResource(OW_FLOOR_RES, "onewayfloor.tga");  // load it!
+                                          resourceHandle->loadTextureResource(OW_FLOOR_RES, "\\Program Files\\xsoko\\data\\onewayfloor.tga");  // load it!
                                       
-                                  //    second_matrix[i][j] = 9;
                                  //     data[i][j]->add(NULL);
                                       break;
                                       
@@ -534,9 +516,8 @@ namespace PacGame
                                   //    data[i][j]->add(p);
                                       
                                       if((resourceHandle->getTextureResource(OW_FLOOR_RES))==NULL)  // texture isn't in memory yet?
-                                          resourceHandle->loadTextureResource(OW_FLOOR_RES, "onewayfloor.tga");  // load it!
+                                          resourceHandle->loadTextureResource(OW_FLOOR_RES, "\\Program Files\\xsoko\\data\\onewayfloor.tga");  // load it!
                                       
-                                 //     second_matrix[i][j] = 10;
                                  //     data[i][j]->add(NULL);
                                       break;
                                       
@@ -546,9 +527,8 @@ namespace PacGame
                                  //     data[i][j]->add(p);
                                       
                                       if((resourceHandle->getTextureResource(OW_FLOOR_RES))==NULL)  // texture isn't in memory yet?
-                                          resourceHandle->loadTextureResource(OW_FLOOR_RES, "onewayfloor.tga");  // load it!
+                                          resourceHandle->loadTextureResource(OW_FLOOR_RES, "\\Program Files\\xsoko\\data\\onewayfloor.tga");  // load it!
                                       
-                                //      second_matrix[i][j] = 11;
                                 //      data[i][j]->add(NULL);
                                       break;
                                       
@@ -582,7 +562,7 @@ namespace PacGame
                                       p = new PPlayer(i, j, this->gameCore);
                                       
                                       if((resourceHandle->getTextureResource(PLAYER_RES))==NULL)  // texture isn't in memory yet?
-                                          resourceHandle->loadTextureResource(PLAYER_RES, "player.tga");  // load it!
+                                          resourceHandle->loadTextureResource(PLAYER_RES, "\\Program Files\\xsoko\\data\\player.tga");  // load it!
                                       /// dynamic->static
                                       this->player = static_cast<PPlayer*>(p); // set class player pointer to player element
                                       data[i][j]->add(p);
@@ -593,7 +573,7 @@ namespace PacGame
                                       p = new PCube(i, j, this->gameCore);
                                       
                                       if((resourceHandle->getTextureResource(CUBE_RES))==NULL)  // texture isn't in memory yet?
-                                          resourceHandle->loadTextureResource(CUBE_RES, "crate.tga");  // load it!
+                                          resourceHandle->loadTextureResource(CUBE_RES, "\\Program Files\\xsoko\\data\\crate.tga");  // load it!
 
                                       data[i][j]->add(p);
                                       second_matrix[i][j] = CUBE;
@@ -604,7 +584,7 @@ namespace PacGame
                                       data[i][j]->add(p);
                                       
                                       if((resourceHandle->getTextureResource(OW_CUBE_RES))==NULL)  // texture isn't in memory yet?
-                                          resourceHandle->loadTextureResource(OW_CUBE_RES, "onewaycube.tga");  // load it!
+                                          resourceHandle->loadTextureResource(OW_CUBE_RES, "\\Program Files\\xsoko\\data\\onewaycube.tga");  // load it!
                                       
                                       second_matrix[i][j] = OW_CUBE_L;
                                       break; 
@@ -614,7 +594,7 @@ namespace PacGame
                                       data[i][j]->add(p);
                                       
                                       if((resourceHandle->getTextureResource(OW_CUBE_RES))==NULL)  // texture isn't in memory yet?
-                                          resourceHandle->loadTextureResource(OW_CUBE_RES, "onewaycube.tga");  // load it!
+                                          resourceHandle->loadTextureResource(OW_CUBE_RES, "\\Program Files\\xsoko\\data\\onewaycube.tga");  // load it!
                                       
                                       second_matrix[i][j] = OW_CUBE_R;
                                       break; 
@@ -624,7 +604,7 @@ namespace PacGame
                                       data[i][j]->add(p);
                                       
                                       if((resourceHandle->getTextureResource(OW_CUBE_RES))==NULL)  // texture isn't in memory yet?
-                                          resourceHandle->loadTextureResource(OW_CUBE_RES, "onewaycube.tga");  // load it!
+                                          resourceHandle->loadTextureResource(OW_CUBE_RES, "\\Program Files\\xsoko\\data\\onewaycube.tga");  // load it!
                                       
                                       second_matrix[i][j] = OW_CUBE_U;
                                       break;  
@@ -634,7 +614,7 @@ namespace PacGame
                                       data[i][j]->add(p);
                                       
                                       if((resourceHandle->getTextureResource(OW_CUBE_RES))==NULL)  // texture isn't in memory yet?
-                                          resourceHandle->loadTextureResource(OW_CUBE_RES, "onewaycube.tga");  // load it!
+                                          resourceHandle->loadTextureResource(OW_CUBE_RES, "\\Program Files\\xsoko\\data\\onewaycube.tga");  // load it!
                                       
                                       second_matrix[i][j] = OW_CUBE_D;
                                       break;
@@ -644,7 +624,7 @@ namespace PacGame
                                       data[i][j]->add(p);
                                       
                                       if((resourceHandle->getTextureResource(BOMB_RES))==NULL)  // texture isn't in memory yet?
-                                               resourceHandle->loadTextureResource(BOMB_RES, "bomb.tga");  // load it!
+                                               resourceHandle->loadTextureResource(BOMB_RES, "\\Program Files\\xsoko\\data\\bomb.tga");  // load it!
                                       
                                       second_matrix[i][j] = BOMB;
                                       break; 
@@ -654,7 +634,7 @@ namespace PacGame
                                       data[i][j]->add(p);
                                       
                                       if((resourceHandle->getTextureResource(U_WALL_RES))==NULL)
-                                          resourceHandle->loadTextureResource(U_WALL_RES, "unsolidwall.tga"); 
+                                          resourceHandle->loadTextureResource(U_WALL_RES, "\\Program Files\\xsoko\\data\\unsolidwall.tga"); 
                                       
                                       second_matrix[i][j] = U_WALL;
                                       break; 
@@ -752,30 +732,25 @@ namespace PacGame
            **************************************************************/
           bool PLevel::initialize()
           {
-              //data = new
               if(!this->loadLevelFromFile())
               {
 				  PacGame::Messages::errorMessage("Level loading from file failed.");
-           //       MessageBox(NULL, _T("Level loading from file failed."), _T("Notice"), NULL);
                   return 0;
               }
+
               // by now, matrix should be initialized with proper classes, if it went ok this far
-              
               // try to initialize core
               if(!this->gameCore->init())
               {
                   this->gameCore->release();
-
-				//  MessageBox(NULL, _T("game core init failed."), _T("Notice"), NULL);
                   Messages::initMessage("Game core", false);
               }
               else
                   Messages::initMessage("Game core", true);
               
-              // temporary, dump state
+              // temporary, dump memory state
               this->print();
               
-			//  MessageBox(NULL, _T("level init success :)"), _T("Notice"), NULL);
 			  PacGame::Messages::initMessage("Level", true);
               return true; // everything went ok
           }
@@ -928,9 +903,6 @@ namespace PacGame
           
           void PLevel::checkAndApplyBombBlast(int i, int j)
           {
-       //       PacGame::RenderMaschine::PParticleEngine particle(i*2.0, j*2.0, -10.0);
-        //      (10.05, -11.4, 29.3);
-        //      particle.process(100);
               if(data[i][j]->returnFirstChild() != NULL)
               {
 				  //  DYNAMIC->STATIC

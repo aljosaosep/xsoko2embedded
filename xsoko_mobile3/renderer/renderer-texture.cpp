@@ -1,6 +1,6 @@
 /*
  * codename: xSoko
- * Copyright (C) Aljosa Osep, Jernej Skrabec, Jernej Halozan 2008 <aljosa.osep@gmail.com, jernej.skrabec@gmail.com, jernej.halozan@gmail.com>
+ * Copyright (C) Aljosa Osep 2008 <aljosa.osep@gmail.com>
  * 
  * xSoko project is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -87,12 +87,13 @@ namespace PacGame
               {
                       if (file == NULL)
                       {
-						  Messages::errorMessage("Texture file is empty!");
+							  Messages::errorMessage("Texture file  is empty!");
+							  Messages::errorMessage(this->filename);
                               return false;                                         // :(
                       }
                       else 
                       {
-						  Messages::errorUnknown();
+							  Messages::errorUnknown();
                               fclose(file);                                         
                               return false;                                         
                       }
@@ -106,7 +107,7 @@ namespace PacGame
                      (header[4]!=24 && header[4]!=32))                              // 24 or 32 bit
               {
 
-				  Messages::errorMessage("Texture isn't 32 or 24 bit OR texture width or height isn't greater than zero :D");
+					  Messages::errorMessage("Texture isn't 32 or 24 bit OR texture width or height isn't greater than zero :D");
                       fclose(file);                                         
                       return false;
               } 
