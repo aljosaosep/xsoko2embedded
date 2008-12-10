@@ -61,7 +61,7 @@
 #include "messages.h"
 #include "renderer/renderer.h"
 #include "renderer/texture.h"
-#include "game.h"
+//#include "game.h"
 #include "input.h"
 #include "session.h"
 #include "levelbox.h"

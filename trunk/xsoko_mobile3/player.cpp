@@ -1,6 +1,6 @@
 /*
  * codename: xSoko
- * Copyright (C) Aljosa Osep, Jernej Skrabec, Jernej Halozan 2008 <aljosa.osep@gmail.com, jernej.skrabec@gmail.com, jernej.halozan@gmail.com>
+ * Copyright (C) Aljosa Osep 2008 <aljosa.osep@gmail.com>
  * 
  * xSoko project is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -58,24 +58,20 @@ namespace PacGame
               // setters
               void PPlayer::setBombs(unsigned _bombs)
               {
-                      bombs = _bombs;
+                   bombs = _bombs;
               }
 
               // getters
               unsigned short PPlayer::getBombs()
               {
-                      return bombs;
+                   return bombs;
               }
-              
-         /*     short PPlayer::isPlayerMovePossible()
-              {
-                  return false;
-              }*/
+
 
               // etc
               void PPlayer::incBombs()
               {
-                      bombs++;
+                   bombs++;
               }
               
               void PPlayer::decBombs()
@@ -86,11 +82,11 @@ namespace PacGame
               // ===== FUNCTIONS TO OVERRIDE ===== //
               void PPlayer::draw() 
               {
-                 //   glColor4f(0.8, 0.8, 0.1, 0.8);
+                    glColor4f(1.0, 1.0, 1.0, 0.8);
                     glBindTexture(GL_TEXTURE_2D, this->core->getResources()->getTextureTesourceId(6));
                  //   this->core->getRenderer()->drawSphere(0.0, 0.0, 0.5);
 					this->core->getRenderer()->drawCube(0.0,0.0,1.0);
-                      // TODO
+
               }
               
               void PPlayer::print()

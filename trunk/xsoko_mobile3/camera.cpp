@@ -1,6 +1,6 @@
 /*
  * codename: xSoko
- * Copyright (C) Aljosa Osep, Jernej Skrabec, Jernej Halozan 2008 <aljosa.osep@gmail.com, jernej.skrabec@gmail.com, jernej.halozan@gmail.com>
+ * Copyright (C) Aljosa Osep 2008 <aljosa.osep@gmail.com>
  * 
  * xSoko project is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -123,15 +123,30 @@ namespace PacGame
         
         void PCamera::fitCameraToLevel(int width, int height)
         {
-            width --;
-            height --;
-            
+	/*		float bigger = (float)(width > height ? width : height);  // they are reversed!
+			float div_val = (width > height ? 1.0 : 2.0);
+			float mul_val = (width > height ? 2.0 : 3.0);*/
 
-            float bigger = (width > height ? width : height) + 1;  // tmp 
+			width --;
+			height --;
+
+			if(width > height)
+			{
+				this->position.setCoordinates(-width/2, -height/2, 0.0);
+				this->view.setCoordinates(-width/2, -height/2,  (width*2)/1);
+				this->up.setCoordinates(0.0, 1.0, 0.0);
+			}
+			else
+			{
+				this->position.setCoordinates(-width/2, -height/2, 0.0);
+				this->view.setCoordinates(-width/2, -height/2,  (height*3)/2);
+				this->up.setCoordinates(0.0, 1.0, 0.0);
+			}
+
             
-            this->position.setCoordinates(height, -width, 0.0);
-            this->view.setCoordinates(height, -width,  2*bigger+6);
-            this->up.setCoordinates(0.0, 1.0, 0.0);
+     /*       this->position.setCoordinates(-width/2, -height/2, 0.0);
+            this->view.setCoordinates(-width/2, -height/2,  (bigger*mul_val)/div_val);
+            this->up.setCoordinates(0.0, 1.0, 0.0);*/
         }
     }
 }

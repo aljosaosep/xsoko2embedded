@@ -1,6 +1,6 @@
 /*
  * codename: xSoko
- * Copyright (C) Aljosa Osep, Jernej Skrabec, Jernej Halozan 2008 <aljosa.osep@gmail.com, jernej.skrabec@gmail.com, jernej.halozan@gmail.com>
+ * Copyright (C) Aljosa Osep 2008 <aljosa.osep@gmail.com>
  * 
  * xSoko project is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -33,7 +33,7 @@
 
 #include "stdafx.h"
 
-namespace PacGame
+/*namespace PacGame
 {
       namespace GameClasses
       {
@@ -51,29 +51,14 @@ namespace PacGame
 			  glLoadIdentity();
 		  }
 
-//		  void *displayPtr = 
-		  //PGameSession *pst = new PGameSession;
 		  
 
           // other
           bool PGame::initGame(int &argc, char* argv[])
           {
 
-		/*	  glutInit(&argc, argv);
-			  glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
-			  glutCreateWindow(this->windowTitle.c_str());
-
-			  			  glutReshapeFunc(calculatePerspective);*/
-
-		//	  this->session->linkRenderFunctionPointer(); /// !!!! is session not null?
-
-			  
-			//  glutDisplayFunc(this->session->displayFuncPtr);
-		//	  glutDisplayFunc(this->session->mainLoop);
-			  glutReshapeFunc(calculatePerspective);
-
-           
+		//	  glutReshapeFunc(calculatePerspective);
               return true;
           }
       }
-}
+}*/
