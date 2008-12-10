@@ -32,10 +32,14 @@ PLevel *level = new PLevel("\\Program Files\\xsoko\\data\\test.lvl");
 PInputSystem *input = new PInputSystem(level);
 PGameSession *session = new PGameSession(level, input);
 
+bool gameRunning = true;
+
+
 
 void drawWrapper()
 {
-	session->mainLoop();
+	if(gameRunning)
+		session->mainLoop();
 }
 
 void inputWrapper(int key, int x, int y)
@@ -49,6 +53,15 @@ void menu(int entry)
 	{
 	case 1 : 
 		exit(0); 
+		level->releaseLevel();
+		break;
+
+	case 2:
+		gameRunning = !gameRunning;
+		break;
+
+	case 3:
+		level->reset();
 		break;
 	}
 }
@@ -64,7 +77,12 @@ void calculatePerspective(int width, int height)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
+	// set camera
 	session->getLevel()->getGameCoreHandle()->getCamera()->fitCameraToLevel(session->getLevel()->getWidth(), session->getLevel()->getHeight());
+}
+
+void runLevel(string filename)
+{
 }
 
 int _tmain(int argc, char* argv[])
@@ -89,17 +107,22 @@ int _tmain(int argc, char* argv[])
 	if(!level->initialize())
 	{
 		MessageBox(NULL, _T("Level loading failed. Level data or texture missing or corrupt. Exiting..."), _T("Error"), NULL);
+	//	level->releaseLevel();
 		exit(0);
 	}
+
+
 
 	glutSpecialFunc(inputWrapper);
 
 	glutDisplayFunc(drawWrapper);
 	glutReshapeFunc(calculatePerspective);
 
-/*	glutCreateMenu(menu);
+	glutCreateMenu(menu);
 	glutAddMenuEntry("Quit", 1);
-	glutAttachMenu(GLUT_LEFT_BUTTON);*/
+	glutAddMenuEntry("Run", 2);
+	glutAddMenuEntry("Reset level", 3);
+	glutAttachMenu(GLUT_LEFT_BUTTON); 
 
 	PacGame::Messages::infoMessage("Entering main loop...");
 	glutMainLoop();

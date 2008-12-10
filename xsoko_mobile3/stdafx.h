@@ -81,6 +81,7 @@
 #include <GLES/glutes.h>
 #include <GLES/glues.h>
 #include <windows.h>
+//#include <afstr.h>
 //#include <atlstr.h>
 
 

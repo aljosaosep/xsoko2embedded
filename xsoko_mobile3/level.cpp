@@ -326,13 +326,15 @@ namespace PacGame
                       if(this->isLevelDone())
                       {
                           this->endgameFlag = true;
+														// do I need both?
+						  this->wonFlag = true;
                           //Messages::infoMessage("You won!!!!! :))))");
 
 						  /////// TODO
 						  // place some YOU WON code here
 						  /// ;)
 						  ///////
-						  MessageBox(NULL, _T("You won! :)"), _T("Congradulations!"), NULL);
+					//	  MessageBox(NULL, _T("You won! :)"), _T("Congradulations!"), NULL);
                       }
                       return true;
                   }
@@ -344,14 +346,16 @@ namespace PacGame
                           reattachNode(i, j, i2, j2, obj);   // so we do it ;)
                           if(this->isLevelDone())
                           {
-                              this->endgameFlag = true;
+                          this->endgameFlag = true;
+														// do I need both?
+						  this->wonFlag = true;
                            //   Messages::infoMessage("You won!!!!! :))))");
 
 						  /////// TODO
 						  // place some YOU WON code here
 						  /// ;)
 						  ///////
-							  MessageBox(NULL, _T("You won! :)"), _T("Congradulations!"), NULL);
+						//	  MessageBox(NULL, _T("You won! :)"), _T("Congradulations!"), NULL);
                           }
                           return true;                         
                       }
@@ -707,6 +711,7 @@ namespace PacGame
               holds.clear();
               endgameFlag = false;
               loadLevelFromFile();
+			  this->getGameCoreHandle()->getCamera()->fitCameraToLevel(this->width, this->height);
           }
           
            /**************************************************************
@@ -718,12 +723,28 @@ namespace PacGame
           }
   
           /**************************************************************
-           * Function returns pointer to renderer object
+           * Function return endgame flag state
            **************************************************************/
           bool PLevel::getEndgameFlag()
           {
               return this->endgameFlag;
           }
+
+		  /**************************************************************
+           * Function return won flag state
+           **************************************************************/
+          bool PLevel::getWonFlag()
+          {
+              return this->wonFlag;
+          }
+
+		  /**************************************************************
+           * Function sets won flag state
+           **************************************************************/
+		  void PLevel::setWonFlag(bool val)
+		  {
+			  this->wonFlag = val;
+		  }
           
           
           /**************************************************************
@@ -747,6 +768,9 @@ namespace PacGame
               }
               else
                   Messages::initMessage("Game core", true);
+
+			  // set rotate value for camera
+			//  this->gameCore->getCamera()->setRotateValue(1.0);
               
               // temporary, dump memory state
               this->print();
@@ -848,6 +872,7 @@ namespace PacGame
                   }
               }
               delete player;
+			  this->gameCore->release();
               Messages::infoMessage("Level data successfully released from memory.");              
           }
           

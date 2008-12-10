@@ -36,26 +36,32 @@ namespace PacGame
     {
         void PInputSystem::process(int key)
         {
+			int rotVal = 1.5; //this->level->getGameCoreHandle()->getCamera()->getRotateValue();
+
 			switch(key)
 			{
 			case GLUT_KEY_UP:
 				glutIgnoreKeyRepeat(true);
-				this->level->moveObject(Aliases::up, this->level->getPlayerHandle());  // move object player up
+				if(this->level->moveObject(Aliases::up, this->level->getPlayerHandle()))  // move object player up
+					this->level->getGameCoreHandle()->getCamera()->rotateViewX(rotVal);
 				break;
 
 			case GLUT_KEY_DOWN:
 				glutIgnoreKeyRepeat(true);
-				this->level->moveObject(Aliases::down, this->level->getPlayerHandle()); // move object player down  
+				if(this->level->moveObject(Aliases::down, this->level->getPlayerHandle())) // move object player down  
+					this->level->getGameCoreHandle()->getCamera()->rotateViewX(-rotVal);
 				break;
 
 			case GLUT_KEY_LEFT:
 				glutIgnoreKeyRepeat(true);
-				this->level->moveObject(Aliases::left, this->level->getPlayerHandle()); // move object player left 
+				if(this->level->moveObject(Aliases::left, this->level->getPlayerHandle())) // move object player left 
+					this->level->getGameCoreHandle()->getCamera()->rotateViewY(rotVal);
 				break;
 
 			case GLUT_KEY_RIGHT:
 				glutIgnoreKeyRepeat(true);
-				this->level->moveObject(Aliases::right, this->level->getPlayerHandle()); // move object player right
+				if(this->level->moveObject(Aliases::right, this->level->getPlayerHandle())) // move object player right
+					this->level->getGameCoreHandle()->getCamera()->rotateViewY(-rotVal);
 				break;
 			}
 
