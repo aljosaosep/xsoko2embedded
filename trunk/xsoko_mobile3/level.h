@@ -110,13 +110,13 @@ namespace PacGame
                   PCore *gameCore;                   // game core object
                   PResourceManager *resourceHandle;  // shortcut to resources
                   bool endgameFlag;
-                  
-           //       PDirection lastDirection;  // direction player is facing according to last move
+
+				  bool wonFlag;
                   
                   vector<PDroppedBomb*> bombs;   // list of currently dropped bombs
                  
               public:
-                  PLevel(string filename) : filename(filename),  width(0), height(0), player(NULL),  gameCore(new PCore), resourceHandle(this->gameCore->getResources()), endgameFlag(false) {} // default constructor
+                  PLevel(string filename) : filename(filename),  width(0), height(0), player(NULL),  gameCore(new PCore), resourceHandle(this->gameCore->getResources()), endgameFlag(false), wonFlag(false) {} // default constructor
                   virtual ~PLevel();
                   
                   // gameplay related
@@ -140,6 +140,8 @@ namespace PacGame
                   
                   // getters
                   bool getEndgameFlag();
+				  bool getWonFlag();
+				  void setWonFlag(bool val);
                   unsigned getWidth();
                   unsigned getHeight();
                   

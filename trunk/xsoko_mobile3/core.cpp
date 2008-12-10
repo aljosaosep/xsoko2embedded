@@ -96,6 +96,8 @@ namespace PacGame
             }
             else
                 Messages::initMessage("Renderer", true);
+
+
             
             return true; // if everything is ok, return true
         }

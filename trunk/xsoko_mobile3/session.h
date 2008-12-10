@@ -71,7 +71,7 @@ namespace PacGame
             bool initialize();
             void mainLoop();
             void Quit();
-        //    void resetLevel();
+            void resetLevel();
             
             // setters
          //   void setLevel(PLevel *level);

@@ -46,7 +46,6 @@ namespace PacGame
 
 		PGameSession::PGameSession(PLevel *level, PInputSystem *input)
 		{
-	//		MessageBox(NULL, _T("perkele saatana!"), _T(";)"), NULL); // WINDOWS SPECIFIC !!!
 			this->level = level;
 			this->input = input;
 			this->player = level->getPlayerHandle();
@@ -99,19 +98,27 @@ namespace PacGame
 		   glRotatef(-180.0, 0.0, 0.0, 1.0);
            this->level->draw();
 
+		   if(this->level->getWonFlag())
+		   {
+			   MessageBox(NULL, _T("You won! :)"), _T("Congradulations!"), NULL);
+			   this->level->setWonFlag(false);
+			   this->resetLevel();
+		   }
+
 		//   this->level->getGameCoreHandle()->getRenderer()->drawText(0.0,0.0, "howdy!!!!!!");
 
 		   glFlush ();
 		   glutSwapBuffers();
         }
         
-        void PGameSession::Quit(){
+        void PGameSession::Quit()
+		{
             forceQuit = true;
         }
         
-   /*     void PGameSession::resetLevel(){
+        void PGameSession::resetLevel(){
             level->reset();
-        }*/
+        }
         
 
         bool PGameSession::initialize()
