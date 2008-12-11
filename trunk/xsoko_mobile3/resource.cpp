@@ -1,13 +1,17 @@
 /*
- * codename: xSoko
- * Copyright (C) Aljosa Osep 2008 <aljosa.osep@gmail.com>
+ * codename: xSoko2embedded
+ * Copyright (C) Aljosa Osep 2008 <aljosa.osep@gmail.com> 
+ * University of Applied Sciences, School of Technology, Seinajoki, Finland
+ * Supervisor: Kimmo Salmenjoki <kimmo.salmenjoki@seamk.fi>
+ *
+ * based on xSoko PC game by Aljosa Osep, Jernej Skrabec, Jernej Halozan <jernej.skrabec@gmail.com>,<jernej.halozan@gmail.com>
  * 
- * xSoko project is free software: you can redistribute it and/or modify it
+ * xSoko2embedded project is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
- * xSoko project is distributed in the hope that it will be useful, but
+ * xSoko2embedded project is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
@@ -88,6 +92,7 @@ namespace PacGame
             {
                 if(this->textures[i]!=NULL)
                 {
+					
                     textures[i]->release();
                     delete textures[i];
                     textures[i] = NULL;
