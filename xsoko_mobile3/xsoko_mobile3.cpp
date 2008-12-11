@@ -1,13 +1,17 @@
 /*
- * codename: xSoko
- * Copyright (C) Aljosa Osep 2008 <aljosa.osep@gmail.com>
+ * codename: xSoko2embedded
+ * Copyright (C) Aljosa Osep 2008 <aljosa.osep@gmail.com> 
+ * University of Applied Sciences, School of Technology, Seinajoki, Finland
+ * Supervisor: Kimmo Salmenjoki <kimmo.salmenjoki@seamk.fi>
+ *
+ * based on xSoko PC game by Aljosa Osep, Jernej Skrabec, Jernej Halozan <jernej.skrabec@gmail.com>,<jernej.halozan@gmail.com>
  * 
- * xSoko project is free software: you can redistribute it and/or modify it
+ * xSoko2embedded project is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
- * xSoko project is distributed in the hope that it will be useful, but
+ * xSoko2embedded project is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
@@ -23,67 +27,9 @@
 
 using namespace std;
 
-// using namespace std;
 using namespace PacGame::GameClasses;
-using namespace PacGame::RenderMaschine;
+//using namespace PacGame::RenderMaschine;
 
-PLevel *level = new PLevel("\\Program Files\\xsoko\\data\\test.lvl");
-
-PInputSystem *input = new PInputSystem(level);
-PGameSession *session = new PGameSession(level, input);
-
-bool gameRunning = true;
-
-
-
-void drawWrapper()
-{
-	if(gameRunning)
-		session->mainLoop();
-}
-
-void inputWrapper(int key, int x, int y)
-{
-	input->process(key);
-}
-
-void menu(int entry)
-{
-	switch(entry)
-	{
-	case 1 : 
-		exit(0); 
-		level->releaseLevel();
-		break;
-
-	case 2:
-		gameRunning = !gameRunning;
-		break;
-
-	case 3:
-		level->reset();
-		break;
-	}
-}
-
-void calculatePerspective(int width, int height)
-{
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-
-	glViewport(0, 0, width, height);
-	gluPerspectivef(45.0f, 1.0f * width / height, 1.0f, 100.0f); // !!!! 
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
-	// set camera
-	session->getLevel()->getGameCoreHandle()->getCamera()->fitCameraToLevel(session->getLevel()->getWidth(), session->getLevel()->getHeight());
-}
-
-void runLevel(string filename)
-{
-}
 
 int _tmain(int argc, char* argv[])
 {
@@ -104,12 +50,7 @@ int _tmain(int argc, char* argv[])
 	glutCreateWindow("xsoko2embedded");
 	PacGame::Messages::initMessage("window", true);
 
-	if(!level->initialize())
-	{
-		MessageBox(NULL, _T("Level loading failed. Level data or texture missing or corrupt. Exiting..."), _T("Error"), NULL);
-	//	level->releaseLevel();
-		exit(0);
-	}
+
 
 
 
@@ -118,11 +59,15 @@ int _tmain(int argc, char* argv[])
 	glutDisplayFunc(drawWrapper);
 	glutReshapeFunc(calculatePerspective);
 
+	glutIdleFunc(idle);
+
 	glutCreateMenu(menu);
 	glutAddMenuEntry("Quit", 1);
 	glutAddMenuEntry("Run", 2);
 	glutAddMenuEntry("Reset level", 3);
 	glutAttachMenu(GLUT_LEFT_BUTTON); 
+
+	//runLevel("string filename");
 
 	PacGame::Messages::infoMessage("Entering main loop...");
 	glutMainLoop();
