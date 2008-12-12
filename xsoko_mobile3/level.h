@@ -106,7 +106,7 @@ namespace PacGame
               private:
                   string filename;                   // level filename
                   PLevelObject* data[30][30];        // actual level data
-                  int second_matrix[30][30];         // presentation of second matrix with id
+            //      int second_matrix[30][30];         // presentation of second matrix with id
                   vector<PTeleport*> teleports;      // vector of teleport pointers
                   unsigned width, height;            // level dimensions
                   PPlayer *player;                   // player instance 

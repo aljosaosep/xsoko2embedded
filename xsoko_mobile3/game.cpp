@@ -46,11 +46,6 @@ namespace PacGame
 		PGameSession *session=new PGameSession; //= new PGameSession(level, input);
 
 
-
-
-	//vector<string> levels;
-//	int levelNum = 0;
-
 		vector<lvlInfo> levels;
 		int levelNum = 0;
 
@@ -76,11 +71,6 @@ namespace PacGame
 				//Messages::infoMessage(line);
 				lvl.push_back(lvlInfo(line, 4+lvlCnt));
 				lvlCnt ++;
-
-			//	CString out(line.c_str());
-
-				//cout<<line<<endl;
-			//	MessageBox(NULL, _T(out), "info", NULL);
 			}
 
 			return lvlCnt;
@@ -116,11 +106,13 @@ namespace PacGame
 
 		void runLevel(string filename)
 		{
+			PLevel *oldLevelPtr=NULL;
 			if(level != NULL)
 			{
 				level->releaseLevel();
-				delete [] level;
-				level = NULL;
+				oldLevelPtr = level;
+		//		delete level;          /// !!!!
+		//		level = NULL;
 			}
 			
 			level = new PLevel("\\Program Files\\xsoko\\data\\"+filename);
@@ -136,9 +128,9 @@ namespace PacGame
 			{*/
 				session->setInput(input);
 				session->setLevel(level);
-		//	}
-			
 
+
+		//	}
 
 			if(!level->initialize())
 			{
@@ -147,22 +139,21 @@ namespace PacGame
 				exit(0);
 			}
 
-		//	level->getGameCoreHandle()->getRenderer()->deinit();
-		//	level->getGameCoreHandle()->getRenderer()->init();
 			session->getLevel()->getGameCoreHandle()->getCamera()->fitCameraToLevel(session->getLevel()->getWidth(), session->getLevel()->getHeight());
+
+				/*if(oldLevelPtr!=NULL)
+				{
+					delete oldLevelPtr;
+					oldLevelPtr = NULL;
+				}*/                        // ---> analyse that !!!!
 		}
 
 		void drawWrapper()
 		{
-		//	if(gameRunning)
-		//		session->mainLoop();
-
 			if(level!=NULL)  // we have level?
 				session->mainLoop(true); // yes - call session mainLoop with doGame=true
 			else
 				session->mainLoop(false); // otherwise, tell mainLoop to draw just a GUI
-
-//			gui->drawMainMenu(0.0,0.0,0.5);
 		}
 
 		void inputWrapper(int key, int x, int y)
@@ -172,7 +163,7 @@ namespace PacGame
 		}
 
 
-		void menu(int entry)
+		void optionsMenuCb(int entry)
 		{
 			//readLevelCfg(levels);
 			switch(entry)
@@ -183,35 +174,36 @@ namespace PacGame
 
 			case 2:
 				//gameRunning = !gameRunning;
-				runLevel("ecika.lvl");
+				if(level != NULL)
+					level->reset();
 				break;
 
-			case 3:
-				level->reset();
-				break;
+		//	case 3:
+		//		level->reset();
+		//		break;
 			}
+		}
 
+		void levelsMenuCb(int entry)
+		{
 			runLevel(levels[entry-4].name);
-
-		//	for(int i=0; i<levelNum; i++)
-		//	{
-		//		if(vector
-		//	}
 		}
 
 		void createMenu()
 		{
+			int levelsMenu;
 			levelNum = readLevelCfg(levels);
 
-			glutCreateMenu(menu);
-			glutAddMenuEntry("Quit", 1);
-			glutAddMenuEntry("Run", 2);
-			glutAddMenuEntry("Reset level", 3);
-
+			levelsMenu = glutCreateMenu(levelsMenuCb);
 			for(int i=0; i<levelNum; i++)
-			{
 				glutAddMenuEntry(levels[i].name.c_str(), levels[i].id);
-			}
+
+			glutCreateMenu(optionsMenuCb);
+
+			glutAddSubMenu("Levels", levelsMenu);
+			glutAddMenuEntry("Reset level", 2);
+			glutAddMenuEntry("Quit", 1);
+
 			glutAttachMenu(GLUT_LEFT_BUTTON); 
 		}
 

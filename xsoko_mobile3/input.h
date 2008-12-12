@@ -45,13 +45,13 @@ namespace PacGame
         {
         private: 
             PLevel *level;    // level object
-            bool visible;
+       //     bool visible;
             
         public:
             
             // constructors
-            PInputSystem(PLevel *level) : level(level), visible(false) { }
-            PInputSystem() : level(NULL), visible(false) { }
+            PInputSystem(PLevel *level) : level(level) { }
+            PInputSystem() : level(NULL) { }
             
             // process function
             void process(int key);
