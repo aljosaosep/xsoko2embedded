@@ -105,7 +105,7 @@ namespace PacGame
 
               if(c!='+') // checks if our position is valid
               {
-                  Messages::errorMessage("Invalid level data."); 
+                  //Messages::errorMessage("Invalid level data."); 
                   return false;                      
               }
 
@@ -418,7 +418,7 @@ namespace PacGame
               if(!level.is_open())  // checks if file is properly open
               {
 				//  MessageBox(NULL, _T("file NOT found!"), _T(":("), NULL);
-				  PacGame::Messages::errorMessage("Level file not found!");
+				  //Messages::errorMessage("Level file not found!");
                   return false;  // if it isn't, end routine
               }
 
@@ -544,7 +544,7 @@ namespace PacGame
                           }
                           else  // if it isn't, we return error
                           {
-                              Messages::errorMessage("Invalid level data.");
+                              //Messages::errorMessage("Invalid level data.");
                               return false;
                           }
                       }
@@ -655,7 +655,7 @@ namespace PacGame
                           }
                           else
                           {
-                              Messages::errorMessage("Invalid level data.");
+                              //Messages::errorMessage("Invalid level data.");
                               return false;
                           }
                       }
@@ -690,7 +690,7 @@ namespace PacGame
                       }
                       else
                       {
-                          Messages::errorMessage("Invalid level data.");
+                          //Messages::errorMessage("Invalid level data.");
                           return false;
                       }
                                         
@@ -699,7 +699,7 @@ namespace PacGame
                   break;   
               }
               
-              Messages::infoMessage("Level data successfully loaded from file.");
+              //Messages::infoMessage("Level data successfully loaded from file.");
               level.close();
               return true; // everything went ok
           }
@@ -759,7 +759,7 @@ namespace PacGame
           {
               if(!this->loadLevelFromFile())
               {
-				  PacGame::Messages::errorMessage("Level loading from file failed.");
+				  //Messages::errorMessage("Level loading from file failed.");
                   return 0;
               }
 
@@ -771,7 +771,7 @@ namespace PacGame
                   Messages::initMessage("Game core", false);
               }
               else
-                  Messages::initMessage("Game core", true);
+                  //Messages::initMessage("Game core", true);
 
 			  // set rotate value for camera
 			//  this->gameCore->getCamera()->setRotateValue(1.0);
@@ -779,7 +779,7 @@ namespace PacGame
               // temporary, dump memory state
               this->print();
               
-			  PacGame::Messages::initMessage("Level", true);
+			  //Messages::initMessage("Level", true);
               return true; // everything went ok
           }
           
@@ -878,7 +878,7 @@ namespace PacGame
               }
               delete player;
 			  this->gameCore->getResources()->release();
-              Messages::infoMessage("Level data successfully released from memory.");              
+              //Messages::infoMessage("Level data successfully released from memory.");              
           }
           
           

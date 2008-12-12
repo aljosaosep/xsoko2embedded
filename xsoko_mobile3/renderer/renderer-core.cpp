@@ -185,11 +185,11 @@ namespace PacGame
           
           void PRenderer::deinit()
           {
-     /*         glDisable(GL_LIGHTING);
+              glDisable(GL_LIGHTING);
               glDisable(GL_DEPTH_TEST);	// Enables Depth Testing
               glDisable(GL_TEXTURE_2D);
               glDisable(GL_COLOR_MATERIAL);
-              glDisable(GL_BLEND); */
+              glDisable(GL_BLEND); 
           }
 
           /********************************************

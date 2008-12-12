@@ -38,20 +38,24 @@ int _tmain(int argc, char* argv[])
 	str = GetCommandLine();
 	MessageBox(NULL, GetCommandLine(), _T("ecika"), NULL);*/
 
-	PacGame::Messages::mainTitleMessage();
+
+
+
+
+	//Messages::mainTitleMessage();
 
 	glutInit(&argc, argv);
-	PacGame::Messages::initMessage("GLUT", true);
+	//Messages::initMessage("GLUT", true);
 
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
-	PacGame::Messages::initMessage("display mode", true);
+	//Messages::initMessage("display mode", true);
 
 	glutInitWindowSize(800, 600);                     // !!!
 	glutCreateWindow("xsoko2embedded");
-	PacGame::Messages::initMessage("window", true);
+	//Messages::initMessage("window", true);
 
 
-
+	createMenu();
 
 
 	glutSpecialFunc(inputWrapper);
@@ -61,15 +65,11 @@ int _tmain(int argc, char* argv[])
 
 	glutIdleFunc(idle);
 
-	glutCreateMenu(menu);
-	glutAddMenuEntry("Quit", 1);
-	glutAddMenuEntry("Run", 2);
-	glutAddMenuEntry("Reset level", 3);
-	glutAttachMenu(GLUT_LEFT_BUTTON); 
+
 
 	//runLevel("string filename");
 
-	PacGame::Messages::infoMessage("Entering main loop...");
+	//Messages::infoMessage("Entering main loop...");
 	glutMainLoop();
 
 	return 0;

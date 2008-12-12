@@ -70,6 +70,7 @@
 #include "level.h"
 #include "player.h"
 #include "game.h"
+#include "gui.h"
 
 #include <typeinfo>
 #include <vector>

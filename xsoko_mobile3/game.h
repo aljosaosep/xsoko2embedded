@@ -47,6 +47,13 @@ namespace PacGame
 {
 	namespace GameClasses
 	{
+		struct lvlInfo
+		{
+			string name;
+			int id;
+
+			lvlInfo(string name, int id) : name(name), id(id) {}
+		};
 
 
 
@@ -58,6 +65,8 @@ namespace PacGame
 		void menu(int entry);
 		void calculatePerspective(int width, int height);
 		void idle();
+		int readLevelCfg(vector<lvlInfo> &lvl);
+		void createMenu();
       }       
 }
 

@@ -121,6 +121,7 @@ namespace PacGame
                  
               public:
                   PLevel(string filename) : filename(filename),  width(0), height(0), player(NULL),  gameCore(new PCore), resourceHandle(this->gameCore->getResources()), endgameFlag(false), wonFlag(false) {} // default constructor
+				  PLevel() :  width(0), height(0), player(NULL),  gameCore(new PCore), resourceHandle(this->gameCore->getResources()), endgameFlag(false), wonFlag(false) {} // default constructor
                   virtual ~PLevel();
                   
                   // gameplay related
