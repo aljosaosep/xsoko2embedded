@@ -49,9 +49,9 @@ namespace PacGame
             if(!(*res)->makeTgaTexture(false))
        //     if(!(*res)->load())
             {
-                cout<<"Error loading "<<(*res)->getFilename()<<endl;  // failed
+            //    cout<<"Error loading "<<(*res)->getFilename()<<endl;  // failed
                 (*res)->release();
-                delete [] (*res);
+                delete  (*res);
                 (*res) = NULL;
                 return false;
             }
@@ -64,7 +64,7 @@ namespace PacGame
             textures[offset] = new PTexture(file);
             if(!((textures[offset])->makeTgaTexture(false)))
             {
-                cout<<"Error loading "<<textures[offset]->getFilename()<<endl;  // failed
+           //     cout<<"Error loading "<<textures[offset]->getFilename()<<endl;  // failed
                 (textures[offset])->release();
                 delete [] textures[offset];
                 textures[offset] = NULL;

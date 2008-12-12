@@ -49,7 +49,7 @@ namespace PacGame
         }
         
         // move camera
-        void PCamera::moveCamera(float direction)
+   /*     void PCamera::moveCamera(float direction)
         {
             PVector3D lookDirection;  // direction we're looking at
             
@@ -76,9 +76,9 @@ namespace PacGame
             this->view.setCoordX(this->view.getCoordX() + (lookDirection.getCoordX()*direction));
             this->view.setCoordY(this->view.getCoordY() + (lookDirection.getCoordY()*direction));            
             this->view.setCoordZ(this->view.getCoordZ() + (lookDirection.getCoordZ()*direction));
-        }
+        }*/
         
-        void PCamera::rotateCamera(float angle, PVector3D speed)
+  /*      void PCamera::rotateCamera(float angle, PVector3D speed)
         {
             PVector3D lookDirection;
             PVector3D newLookDirection;
@@ -123,8 +123,8 @@ namespace PacGame
 			// Last we add the new rotations to the old view to correctly rotate the camera.
 			xView = xPos + xNewLookDirection;
 			yView = yPos + yNewLookDirection;
-			zView = zPos + zNewLookDirection;*/
-        }
+			zView = zPos + zNewLookDirection;
+        }*/
         
         void PCamera::fitCameraToLevel(int width, int height)
         {
@@ -133,14 +133,14 @@ namespace PacGame
 
 			if(width > height)
 			{
-				this->position.setCoordinates(-width/2, -height/2, 0.0);
-				this->view.setCoordinates(-width/2, -height/2,  (width*2)/1);
+				this->position.setCoordinates((float)-width/2, (float)-height/2, 0.0);
+				this->view.setCoordinates((float)-width/2, (float)-height/2,  (float)(width*2)/1);
 				this->up.setCoordinates(0.0, 1.0, 0.0);
 			}
 			else
 			{
-				this->position.setCoordinates(-width/2, -height/2, 0.0);
-				this->view.setCoordinates(-width/2, -height/2,  (height*3)/2);
+				this->position.setCoordinates((float)-width/2, (float)-height/2, 0.0);
+				this->view.setCoordinates((float)-width/2, (float)-height/2,  (float)(height*3)/2);
 				this->up.setCoordinates(0.0, 1.0, 0.0);
 			}
         }
@@ -159,7 +159,5 @@ namespace PacGame
 		{
 			return this->cameraRotateValue;
 		}
-
-
     }
 }

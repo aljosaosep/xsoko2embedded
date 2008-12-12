@@ -26,6 +26,7 @@
  *
  * Created on July 18, 2008, 11:42 AM
  * Changed by Jernej, October 5, 2008
+ * Changed by Aljosa for xSoko2embedded, December 08
  */
 
 #ifndef __SESSION_H
@@ -34,7 +35,7 @@
 #include "level.h"
 #include "renderer/renderer.h"
 #include "input.h"
-//#include "gui/win.h"
+#include "gui.h"
 
 using namespace PacGame::RenderMaschine;
 using namespace PacGame::GameClasses::GameObjects;
@@ -49,11 +50,12 @@ namespace PacGame
             PLevel *level; 
             PPlayer *player;   
             PCamera *camera;
-            unsigned score;
+			//PGuiEmbedded *gui;
+            //unsigned score;
             
             PInputSystem *input;
-            unsigned moves;  
-            double rotations_per_tick;
+            //unsigned moves;  
+            //double rotations_per_tick;
      //       Window* gameWin;
             bool forceQuit;
 
@@ -67,18 +69,18 @@ namespace PacGame
 
             // constructors & destructor
             PGameSession(PLevel *level, PInputSystem *input);
-        //    PGameSession();
+            PGameSession();
             ~PGameSession();
             
             // methods
             bool run();
             bool initialize();
-            void mainLoop();
+            void mainLoop(bool renderGame);
             void Quit();
             void resetLevel();
             
             // setters
-         //   void setLevel(PLevel *level);
+            void setLevel(PLevel *level);
             void setScore(unsigned score);
             void setInput(PInputSystem *input);
             
@@ -86,31 +88,6 @@ namespace PacGame
             PLevel *getLevel() const;
             unsigned getScore() const;
         };
-
-
-	
-
-
-	//	PGameSession s;
-   
-   /*     class PGuiSession{
-        private:
-            bool initSuccess;
-            bool canQuit;
-      //      Window* mainWin;
-            PGameSession levelSession;
-            PInputSystem input;
-            
-            void setCallBacks();
-            void removeCallBacks();            
-        public:
-            PGuiSession(int width, int height);
-            bool run();
-            void Quit();
-            void LoadLevel(string levelPath);
-      //      Window* getMainWindow();
-            ~PGuiSession();
-        };*/
     }
 }
 

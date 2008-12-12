@@ -40,10 +40,53 @@ namespace PacGame
 {
 	namespace GameClasses
 	{
-		PLevel *level=NULL;// = new PLevel("\\Program Files\\xsoko\\data\\test.lvl");
+		PLevel *level=NULL;//("\\Program Files\\xsoko\\data\\test.lvl");
 
 		PInputSystem *input=NULL;// = new PInputSystem(level);
-		PGameSession *session=NULL; //= new PGameSession(level, input);
+		PGameSession *session=new PGameSession; //= new PGameSession(level, input);
+
+
+
+
+	//vector<string> levels;
+//	int levelNum = 0;
+
+		vector<lvlInfo> levels;
+		int levelNum = 0;
+
+		int readLevelCfg(vector<lvlInfo> &lvl)
+		{
+			int lvlCnt=0;
+
+			fstream lvlCfg;
+			lvlCfg.open("\\Program Files\\xsoko\\data\\levels.cfg", ios::in);
+
+			if(!lvlCfg.is_open())
+			{
+				//Messages::errorMessage("Level config missing! You can't play game without it. Exiting...");
+				releaseAndQuit();
+			}
+
+			string line;
+
+			while(!lvlCfg.eof())
+			{
+		
+				getline(lvlCfg, line);
+				//Messages::infoMessage(line);
+				lvl.push_back(lvlInfo(line, 4+lvlCnt));
+				lvlCnt ++;
+
+			//	CString out(line.c_str());
+
+				//cout<<line<<endl;
+			//	MessageBox(NULL, _T(out), "info", NULL);
+			}
+
+			return lvlCnt;
+		}
+
+
 
 		void releaseAndQuit()
 
@@ -73,10 +116,29 @@ namespace PacGame
 
 		void runLevel(string filename)
 		{
-			level = new PLevel("\\Program Files\\xsoko\\data\\test.lvl");
+			if(level != NULL)
+			{
+				level->releaseLevel();
+				delete [] level;
+				level = NULL;
+			}
+			
+			level = new PLevel("\\Program Files\\xsoko\\data\\"+filename);
 
-			input = new PInputSystem(level);
-			session = new PGameSession(level, input);
+			if(input == NULL)
+				input = new PInputSystem(level);
+			else
+				input->setLevel(level);
+
+	/*		if(session == NULL)
+				session = new PGameSession(level, input);
+			else
+			{*/
+				session->setInput(input);
+				session->setLevel(level);
+		//	}
+			
+
 
 			if(!level->initialize())
 			{
@@ -85,6 +147,8 @@ namespace PacGame
 				exit(0);
 			}
 
+		//	level->getGameCoreHandle()->getRenderer()->deinit();
+		//	level->getGameCoreHandle()->getRenderer()->init();
 			session->getLevel()->getGameCoreHandle()->getCamera()->fitCameraToLevel(session->getLevel()->getWidth(), session->getLevel()->getHeight());
 		}
 
@@ -93,8 +157,12 @@ namespace PacGame
 		//	if(gameRunning)
 		//		session->mainLoop();
 
-			if(session!=NULL)
-				session->mainLoop();
+			if(level!=NULL)  // we have level?
+				session->mainLoop(true); // yes - call session mainLoop with doGame=true
+			else
+				session->mainLoop(false); // otherwise, tell mainLoop to draw just a GUI
+
+//			gui->drawMainMenu(0.0,0.0,0.5);
 		}
 
 		void inputWrapper(int key, int x, int y)
@@ -106,6 +174,7 @@ namespace PacGame
 
 		void menu(int entry)
 		{
+			//readLevelCfg(levels);
 			switch(entry)
 			{
 			case 1 : 
@@ -121,6 +190,29 @@ namespace PacGame
 				level->reset();
 				break;
 			}
+
+			runLevel(levels[entry-4].name);
+
+		//	for(int i=0; i<levelNum; i++)
+		//	{
+		//		if(vector
+		//	}
+		}
+
+		void createMenu()
+		{
+			levelNum = readLevelCfg(levels);
+
+			glutCreateMenu(menu);
+			glutAddMenuEntry("Quit", 1);
+			glutAddMenuEntry("Run", 2);
+			glutAddMenuEntry("Reset level", 3);
+
+			for(int i=0; i<levelNum; i++)
+			{
+				glutAddMenuEntry(levels[i].name.c_str(), levels[i].id);
+			}
+			glutAttachMenu(GLUT_LEFT_BUTTON); 
 		}
 
 		void calculatePerspective(int width, int height)

@@ -533,19 +533,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\CommonStructures.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\core.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\game-init.cpp"
+				RelativePath=".\game.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\game.cpp"
+				RelativePath=".\gui.cpp"
 				>
 			</File>
 			<File
@@ -672,6 +668,10 @@
 			</File>
 			<File
 				RelativePath=".\game.h"
+				>
+			</File>
+			<File
+				RelativePath=".\gui.h"
 				>
 			</File>
 			<File

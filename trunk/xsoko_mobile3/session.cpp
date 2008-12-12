@@ -42,22 +42,25 @@ namespace PacGame
 {
     namespace GameClasses
     {
-    /*    PGameSession::PGameSession(PLevel *level, PInputSystem *input) : level(level), camera(level->getGameCoreHandle()->getCamera()), input(input), moves(0),  rotations_per_tick(0.1), gameWin(createGameMenu())
-        {}*/
-
-	//	PGameSession::PGameSession(PLevel *level, PInputSystem *input) : level(level), camera(level->getGameCoreHandle()->getCamera()), input(input), moves(0),  rotations_per_tick(0.1)
-     //   {}
-
 		PGameSession::PGameSession(PLevel *level, PInputSystem *input)
 		{
 			this->level = level;
 			this->input = input;
 			this->player = level->getPlayerHandle();
 			this->camera = level->getGameCoreHandle()->getCamera();
+//			this->gui = new PGuiEmbedded;
 		}
         
-     /*   PGameSession::PGameSession() : level(NULL), player(NULL), camera(NULL), input(NULL),  moves(0),rotations_per_tick(0.1), gameWin(createGameMenu())
-        {}*/
+		PGameSession::PGameSession() 
+        {
+			this->level = NULL;
+			this->player = NULL;
+			this->camera = NULL;
+			this->input = NULL;  
+//			this->moves = 0;
+//			this->rotations_per_tick = 0.1; 
+		//	this->gui = new PGuiEmbedded;
+		}
 
 
 
@@ -68,7 +71,7 @@ namespace PacGame
 		} */
             
 		float angle = 0.0;
-        void PGameSession::mainLoop()
+        void PGameSession::mainLoop(bool renderGame)
         {
             /* the time of the previous frame
             double old_time = glfwGetTime();   
@@ -93,23 +96,50 @@ namespace PacGame
 		   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		   glLoadIdentity();
 
-		//   this->camera->fitCameraToLevel(this->level->getWidth(), this->level->getHeight());
 
-		   gluLookAt(this->camera->view.getCoordX(), this->camera->view.getCoordY(), this->camera->view.getCoordZ(), 
-                     this->camera->position.getCoordX(), this->camera->position.getCoordY(), this->camera->position.getCoordZ(), 
-                     this->camera->up.getCoordX(), this->camera->up.getCoordY(), this->camera->up.getCoordZ());
-
-		   glRotatef(-180.0, 0.0, 0.0, 1.0);
-           this->level->draw();
-
-		   if(this->level->getWonFlag())
+		   if(renderGame) // in this case, do game rendering!!!
 		   {
-			   MessageBox(NULL, _T("You won! :)"), _T("Congradulations!"), NULL);
-			   this->level->setWonFlag(false);
-			   this->resetLevel();
-		   }
+			   gluLookAt(this->camera->view.getCoordX(), this->camera->view.getCoordY(), this->camera->view.getCoordZ(), 
+						 this->camera->position.getCoordX(), this->camera->position.getCoordY(), this->camera->position.getCoordZ(), 
+						 this->camera->up.getCoordX(), this->camera->up.getCoordY(), this->camera->up.getCoordZ());
 
-		//   this->level->getGameCoreHandle()->getRenderer()->drawText(0.0,0.0, "howdy!!!!!!");
+			   glRotatef(-180.0, 0.0, 0.0, 1.0);
+			   this->level->draw();
+
+			   if(this->level->getWonFlag())
+			   {
+				   MessageBox(NULL, _T("You won! :)"), _T("Congratulations!"), NULL);
+				   this->level->setWonFlag(false);
+				   this->resetLevel();
+			   }
+		   }
+		   else // otherwise, do GUI
+		//	   this->gui->drawMainMenu(0.0,0.0,0.5);
+		   {
+			   // draws all the text
+			   glColor4f(1.0, 0.0,0.0,1.0);
+			   glutTrueTypeString(L"Arial", 20, 2, 0, 270, L"xSoko2embedded");
+			   glColor4f(0.0, 1.0,0.0,0.5);
+			   glutTrueTypeString(L"Arial", 8, 2, 0, 260, L"xSoko port to ARM platform");
+
+			   glColor4f(1.0, 1.0,1.0,1.0);
+			   glutTrueTypeString(L"Arial", 10, 2, 0, 230, L"Author: Aljoša Ošep");
+			   glutTrueTypeString(L"Arial", 10, 2, 0, 215, L"Supervisor: Kimmo Salmenjoki");
+			   glutTrueTypeString(L"Arial", 10, 2, 0, 200, L"aljosa.osep@gmail.com");
+			   glutTrueTypeString(L"Arial", 10, 2, 0, 185, L"kimmo.salmenjoki@seamk.fi");
+
+			   glutTrueTypeString(L"Arial", 10, 2, 0, 150, L"University of Applied Sciences");
+			   glutTrueTypeString(L"Arial", 10, 2, 0, 135, L"School of Technology, Seinajoki");
+			   glutTrueTypeString(L"Arial", 10, 2, 0, 120, L"Finland");
+
+			   glutTrueTypeString(L"Arial", 10, 2, 0, 90, L"University of Maribor");
+			   glutTrueTypeString(L"Arial", 10, 2, 0, 75, L"FERI");
+			   glutTrueTypeString(L"Arial", 10, 2, 0, 60, L"Slovenia");
+
+			   glColor4f(0.0, 0.0,1.0,1.0);
+			   glutTrueTypeString(L"Arial", 10, 1|4, 0, 30, L"http://code.google.com/xsoko");
+			   glutTrueTypeString(L"Arial", 10, 1|4, 0, 15, L"http://code.google.com/xsoko2embedded");
+		   }
 
 		   glFlush ();
 		   glutSwapBuffers();
@@ -151,11 +181,11 @@ namespace PacGame
 
      /*       if(!this->initialize())
             {
-                Messages::initMessage("Game session", false);
+                //Messages::initMessage("Game session", false);
                 return false;
             }
             else
-                Messages::initMessage("Game session", true);*/
+                //Messages::initMessage("Game session", true);*/
             
 
 
@@ -165,13 +195,13 @@ namespace PacGame
         
         // setters
         // sets session's level
-   /*     void PGameSession::setLevel(PLevel *level)
+        void PGameSession::setLevel(PLevel *level)
         {
             this->level = level;
             this->player = level->getPlayerHandle();
             this->camera = level->getGameCoreHandle()->getCamera();
         //    level->initialize();
-        }*/
+        }
         
         
         void PGameSession::setInput(PInputSystem *input)
@@ -180,12 +210,12 @@ namespace PacGame
         }
         
         // sets session's score
-        void PGameSession::setScore(unsigned score)
+   /*     void PGameSession::setScore(unsigned score)
         {
             this->score = score;
-        }
+        }*/
         
-     /*   void PGameSession::setGameEnd()
+     /*  void PGameSession::setGameEnd()
         {
             this->isGameRunning = false;
         }*/
@@ -198,106 +228,15 @@ namespace PacGame
         }
         
         // returns score
-        unsigned PGameSession::getScore() const
+     /*   unsigned PGameSession::getScore() const
         {
             return this->score;
-        }
+        }*/
         
         PGameSession::~PGameSession()
         {
         //    SetGameSession(NULL);   // !!!!!!!!
         //    delete gameWin;
         }
-        
-     /*   PGuiSession::PGuiSession(int width, int height){
-            initSuccess = false;
-            if(InitGUI("data/GUI.tga","data/font.tga")){
-                canQuit = false;
-                setCallBacks();
-                SetGuiSession(this);
-                levelSession.setInput(&input);
-                //glfwDisable(GLFW_MOUSE_CURSOR);
-                glResizeWnd(width,height);
-                
-                mainWin = createMainMenu();
-                setMainWindow(mainWin);
-                
-                initSuccess = true;
-            }
-        }
-        
-        bool PGuiSession::run(){
-            if(!initSuccess)
-                return false;
-            
-            double lastTime = glfwGetTime();
-            int fps = 0;
-            while(!canQuit){
-                if(glfwGetTime()-lastTime>=1){
-                    cout << "FPS: " << fps << endl;
-                    fps = 0;
-                    lastTime = glfwGetTime();
-                } else
-                    fps++;
-                // clear the buffer
-                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-                glLoadIdentity();
-                glTranslatef(0, 0, -4);
-                // draw the figure
-                RenderGUI();
-                glfwSwapBuffers();
-            }
-            return true;
-        }
-        
-        void PGuiSession::setCallBacks(){
-            glfwSetMouseButtonCallback(onMouseClick);
-            glfwSetMousePosCallback(onMouseMove);
-            glfwSetWindowSizeCallback(glResizeWnd);
-        }
-        
-        void PGuiSession::removeCallBacks(){
-            glfwSetMouseButtonCallback(NULL);
-            glfwSetMousePosCallback(NULL);
-            glfwSetWindowSizeCallback(NULL);
-        }
-        
-        void PGuiSession::Quit(){
-            canQuit = true;
-        }
-        
-        void PGuiSession::LoadLevel(string levelPath){
-            //removeCallBacks();
-            
-            //move to better place
-            glMatrixMode(GL_PROJECTION);						// Select The Projection Matrix
-            glLoadIdentity();                                                         // Reset The Projection Matrix
-            // Calculate The Aspect Ratio Of The Window
-            gluPerspective(45.0f,640.0f/480,0.1f,100.0f);
-            glMatrixMode(GL_MODELVIEW);						// Select The Modelview Matrix
-            glLoadIdentity();
-            
-            PLevel level(levelPath);
-            // input object
-            input.setLevel(&level);
-            // make session
-            levelSession.setLevel(&level);
-            levelSession.run();
-            
-            setMainWindow(mainWin);            
-            //setCallBacks();
-        }
-        
-        Window* PGuiSession::getMainWindow(){
-            return mainWin;
-        }
-        
-        PGuiSession::~PGuiSession(){
-            SetGuiSession(NULL);
-            DestroyGUI();
-            removeCallBacks();
-            glfwEnable(GLFW_MOUSE_CURSOR);
-            delete mainWin;
-        }*/
     }
 }
