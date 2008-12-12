@@ -574,7 +574,7 @@ namespace PacGame
                                       /// dynamic->static
                                       this->player = static_cast<PPlayer*>(p); // set class player pointer to player element
                                       data[i][j]->add(p);
-                                      second_matrix[i][j] = PLAYER;
+//                                      second_matrix[i][j] = PLAYER;
                                       break;
                                       
                                   case CUBE:
@@ -584,7 +584,7 @@ namespace PacGame
                                           resourceHandle->loadTextureResource(CUBE_RES, "\\Program Files\\xsoko\\data\\crate.tga");  // load it!
 
                                       data[i][j]->add(p);
-                                      second_matrix[i][j] = CUBE;
+ //                                     second_matrix[i][j] = CUBE;
                                       break;
                                       
                                   case OW_CUBE_L:
@@ -593,8 +593,7 @@ namespace PacGame
                                       
                                       if((resourceHandle->getTextureResource(OW_CUBE_RES))==NULL)  // texture isn't in memory yet?
                                           resourceHandle->loadTextureResource(OW_CUBE_RES, "\\Program Files\\xsoko\\data\\onewaycube.tga");  // load it!
-                                      
-                                      second_matrix[i][j] = OW_CUBE_L;
+                                     
                                       break; 
                                       
                                   case OW_CUBE_R:
@@ -603,8 +602,6 @@ namespace PacGame
                                       
                                       if((resourceHandle->getTextureResource(OW_CUBE_RES))==NULL)  // texture isn't in memory yet?
                                           resourceHandle->loadTextureResource(OW_CUBE_RES, "\\Program Files\\xsoko\\data\\onewaycube.tga");  // load it!
-                                      
-                                      second_matrix[i][j] = OW_CUBE_R;
                                       break; 
                                       
                                   case OW_CUBE_U:
@@ -613,8 +610,6 @@ namespace PacGame
                                       
                                       if((resourceHandle->getTextureResource(OW_CUBE_RES))==NULL)  // texture isn't in memory yet?
                                           resourceHandle->loadTextureResource(OW_CUBE_RES, "\\Program Files\\xsoko\\data\\onewaycube.tga");  // load it!
-                                      
-                                      second_matrix[i][j] = OW_CUBE_U;
                                       break;  
                                       
                                   case OW_CUBE_D:
@@ -623,8 +618,6 @@ namespace PacGame
                                       
                                       if((resourceHandle->getTextureResource(OW_CUBE_RES))==NULL)  // texture isn't in memory yet?
                                           resourceHandle->loadTextureResource(OW_CUBE_RES, "\\Program Files\\xsoko\\data\\onewaycube.tga");  // load it!
-                                      
-                                      second_matrix[i][j] = OW_CUBE_D;
                                       break;
                                       
                                   case BOMB:
@@ -633,8 +626,6 @@ namespace PacGame
                                       
                                       if((resourceHandle->getTextureResource(BOMB_RES))==NULL)  // texture isn't in memory yet?
                                                resourceHandle->loadTextureResource(BOMB_RES, "\\Program Files\\xsoko\\data\\bomb.tga");  // load it!
-                                      
-                                      second_matrix[i][j] = BOMB;
                                       break; 
                                       
                                   case U_WALL:
@@ -643,14 +634,11 @@ namespace PacGame
                                       
                                       if((resourceHandle->getTextureResource(U_WALL_RES))==NULL)
                                           resourceHandle->loadTextureResource(U_WALL_RES, "\\Program Files\\xsoko\\data\\unsolidwall.tga"); 
-                                      
-                                      second_matrix[i][j] = U_WALL;
                                       break; 
 
                                       
                                   default:   // in
                                       data[i][j]->add(NULL);
-                                      second_matrix[i][j] = 0;
                               }
                           }
                           else
@@ -677,8 +665,6 @@ namespace PacGame
                       parentTeleport = returnTeleport(returnNumberFromFile(level)); // get parent teleport
                       int tmp_i = parentTeleport->getI();
                       int tmp_j = parentTeleport->getJ();
-                      second_matrix[tmp_i][tmp_j] = parentTeleport->getId();
-                      
                       
                       childTeleport = returnTeleport(returnNumberFromFile(level));  // get child teleport
 
@@ -686,7 +672,7 @@ namespace PacGame
                       {
                     //      parentTeleport->add(childTeleport);  // attach them
                           parentTeleport->setChildTeleport(childTeleport);                      
-                          cout<<"Teleport "<<childTeleport->getId()<<" attached to teleport "<<parentTeleport->getId()<<endl;
+                          //cout<<"Teleport "<<childTeleport->getId()<<" attached to teleport "<<parentTeleport->getId()<<endl;
                       }
                       else
                       {
@@ -797,7 +783,7 @@ namespace PacGame
                           if(obj!=NULL) // if there is boject binded
                           {
                               glPushMatrix();
-                              glTranslatef(i, j, 0.0);
+                              glTranslatef((float)i, (float)j, 0.0);
                               obj->draw(); // prints it
                               glPopMatrix();
                           }
@@ -805,7 +791,7 @@ namespace PacGame
                               if(data[i][j]!=NULL)
                               {
                                   glPushMatrix();
-                                  glTranslatef(i, j, 0.0);
+                                  glTranslatef((float)i, (float)j, 0.0);
                                   data[i][j]->draw();  // otherwise, print object
                                   glPopMatrix();
                               }
@@ -817,8 +803,8 @@ namespace PacGame
                               {
                                   
                                   glPushMatrix();
-                                  glTranslatef(this->bombs[i]->i, this->bombs[i]->j, 0.0);
-//                                  glColor3f(1.0, 0.0, 0.0);
+                                  glTranslatef((float)this->bombs[i]->i, (float)this->bombs[i]->j, 0.0);
+                         //         glColor3f(1.0, 0.0, 0.0);
                                   glBindTexture(GL_TEXTURE_2D, this->resourceHandle->getTextureTesourceId(BOMB_RES));
                                   this->gameCore->getRenderer()->drawCube(0.0, 0.0, 0.5);
                                   glPopMatrix();
@@ -922,7 +908,7 @@ namespace PacGame
           {
               if(!data[i][j]->isActiveBomb())
               {
-                  cout<<"I can attach bomb here ;)"<<endl;
+                  //cout<<"I can attach bomb here ;)"<<endl;
             //      data[i][j]->attachToRoot(new PacGame::GameClasses::GameObjects::PDetonatedBomb());
                   data[i][j]->toogleBombActivity();
 //                  this->bombs.push_back(new PDroppedBomb(i, j));

@@ -58,9 +58,9 @@ namespace PacGame
 
           void PObject::print()
           {
-              cout<<"=========== OBJECT INFO =============="<<endl;
+              //cout<<"=========== OBJECT INFO =============="<<endl;
 //              this->position.printCoordinates();
-              cout<<"======================================"<<endl;
+              //cout<<"======================================"<<endl;
           }
 
           // linked list related

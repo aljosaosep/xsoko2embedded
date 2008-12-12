@@ -31,6 +31,8 @@
  * Changes:
  * Aljosa May 28 2008
  * Jernej October 5 2008
+ *
+ * Completely rewritten for xSoko2embedded by Aljosa, December 08
  */
 
 #ifndef __GAME_H
@@ -47,15 +49,14 @@ namespace PacGame
 {
 	namespace GameClasses
 	{
+		// structure used for menu - to every level name, id is attached, so it works under glut
 		struct lvlInfo
 		{
-			string name;
-			int id;
+			string name; // filename
+			int id; // id
 
-			lvlInfo(string name, int id) : name(name), id(id) {}
+			lvlInfo(string name, int id) : name(name), id(id) {} // constructor
 		};
-
-
 
 		bool gameRunning = true;
 		void releaseAndQuit();

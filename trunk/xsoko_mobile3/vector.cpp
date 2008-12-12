@@ -92,7 +92,7 @@ namespace PacGame
           // print
           void PVector3D::printCoordinates()
           {
-              cout<<"x:"<<x<<" y:"<<y<<" z:"<<z<<endl;              
+              //cout<<"x:"<<x<<" y:"<<y<<" z:"<<z<<endl;              
           }
           
           // operators
